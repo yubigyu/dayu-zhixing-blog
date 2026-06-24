@@ -1,8 +1,8 @@
 ---
-title: "AI时代来临，企业主该如何用好AI工具"
-description: "从企业主视角理解AI工具如何真正创造业务价值。"
-pubDate: "2026-06-24"
-heroImage: "/blog-placeholder-1.jpg"
+title: AI时代来临，企业主该如何用好AI工具
+description: 从企业主视角理解AI工具如何真正创造业务价值。
+pubDate: 2026-06-24
+heroImage: '""'
 ---
 # AI 不是新时代的龟壳：企业主该如何真正用好 AI？
 
