@@ -1,48 +1,214 @@
 ---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { SITE_DESCRIPTION, SITE_SLOGAN, SITE_TITLE } from '../consts';
+
+const topics = [
+	{
+		title: 'AI工具实践',
+		description: '记录 AI 工具、Agent、Dify、Codex、自动化工作流的真实使用经验。',
+	},
+	{
+		title: '第二大脑',
+		description: '记录 Obsidian、Logseq、PARA、知识管理与个人知识库建设。',
+	},
+	{
+		title: '数字化转型',
+		description: '从业务、系统、组织三个角度理解企业数字化升级。',
+	},
+	{
+		title: '商业实践',
+		description: '记录项目探索、商业判断、合作经验与市场观察。',
+	},
+	{
+		title: '项目案例',
+		description: '沉淀个人项目、业务系统、MVP 与数字化方案案例。',
+	},
+];
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			main {
+				width: 960px;
+			}
+			.hero {
+				padding: 3.5em 0 3em;
+				border-bottom: 1px solid rgb(var(--gray-light));
+			}
+			.hero h1 {
+				margin-bottom: 0.35em;
+				font-size: 3.052em;
+			}
+			.slogan {
+				margin: 0 0 0.75em;
+				color: rgb(var(--gray-dark));
+				font-size: 1.35em;
+				font-weight: 700;
+			}
+			.description {
+				max-width: 760px;
+				margin: 0;
+				color: rgb(var(--gray));
+			}
+			.section {
+				padding: 2.75em 0 0;
+			}
+			.section h2 {
+				margin-bottom: 1em;
+				font-size: 1.953em;
+			}
+			.topic-grid {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 1rem;
+			}
+			.topic-card {
+				padding: 1.25em;
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 8px;
+				background: #fff;
+			}
+			.topic-card h3 {
+				margin-bottom: 0.45em;
+				font-size: 1.15em;
+			}
+			.topic-card p {
+				margin: 0;
+				color: rgb(var(--gray));
+				font-size: 0.95em;
+				line-height: 1.65;
+			}
+			.post-list {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 2rem;
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+			}
+			.post-list li {
+				width: calc(50% - 1rem);
+			}
+			.post-list li * {
+				text-decoration: none;
+				transition: 0.2s ease;
+			}
+			.post-list li:first-child {
+				width: 100%;
+				margin-bottom: 1rem;
+				text-align: center;
+			}
+			.post-list li:first-child img {
+				width: 100%;
+			}
+			.post-list li:first-child .title {
+				font-size: 2.369rem;
+			}
+			.post-list li img {
+				margin-bottom: 0.5rem;
+				border-radius: 8px;
+			}
+			.post-list li a {
+				display: block;
+			}
+			.title {
+				margin: 0;
+				color: rgb(var(--black));
+				line-height: 1.2;
+			}
+			.date {
+				margin: 0.25em 0 0;
+				color: rgb(var(--gray));
+			}
+			.post-list li a:hover h3,
+			.post-list li a:hover .date {
+				color: rgb(var(--accent));
+			}
+			.post-list a:hover img {
+				box-shadow: var(--box-shadow);
+			}
+			@media (max-width: 720px) {
+				.hero {
+					padding: 2em 0;
+				}
+				.hero h1 {
+					font-size: 2.25em;
+				}
+				.slogan {
+					font-size: 1.15em;
+				}
+				.topic-grid {
+					grid-template-columns: 1fr;
+				}
+				.post-list {
+					gap: 1.25em;
+				}
+				.post-list li,
+				.post-list li:first-child {
+					width: 100%;
+					text-align: left;
+				}
+				.post-list li:first-child .title {
+					font-size: 1.563em;
+				}
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<section class="hero">
+				<h1>{SITE_TITLE}</h1>
+				<p class="slogan">{SITE_SLOGAN}</p>
+				<p class="description">{SITE_DESCRIPTION}</p>
+			</section>
+
+			<section class="section" aria-labelledby="topics-heading">
+				<h2 id="topics-heading">专题入口</h2>
+				<div class="topic-grid">
+					{
+						topics.map((topic) => (
+							<article class="topic-card">
+								<h3>{topic.title}</h3>
+								<p>{topic.description}</p>
+							</article>
+						))
+					}
+				</div>
+			</section>
+
+			<section class="section" aria-labelledby="latest-posts-heading">
+				<h2 id="latest-posts-heading">最新文章</h2>
+				<ul class="post-list">
+					{
+						posts.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`}>
+									{post.data.heroImage && (
+										<Image width={720} height={360} src={post.data.heroImage} alt="" />
+									)}
+									<h3 class="title">{post.data.title}</h3>
+									<p class="date">
+										<FormattedDate date={post.data.pubDate} />
+									</p>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
 		</main>
 		<Footer />
 	</body>
