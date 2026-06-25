@@ -1,20 +1,74 @@
 ---
+import { existsSync } from 'node:fs';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION } from '../consts';
+
+const avatarCandidates = [
+	'/assets/images/avatar/dayu-avatar.webp',
+	'/assets/images/avatar/dayu-avatar.png',
+	'/assets/images/avatar/dayu-avatar.jpg',
+	'/assets/images/avatar/dayu-avatar.jpeg',
+];
+
+const avatarSrc = avatarCandidates.find((src) =>
+	existsSync(new URL(`../../public${src}`, import.meta.url)),
+);
 ---
 
 <!doctype html>
 <html lang="zh-CN">
 	<head>
 		<BaseHead title="关于我 | 大愚知行录" description={SITE_DESCRIPTION} />
+		<style>
+			.about-header {
+				display: flex;
+				align-items: center;
+				gap: 1.5rem;
+				margin-bottom: 1.5rem;
+			}
+			.about-avatar {
+				flex: 0 0 auto;
+				width: 104px;
+				height: 104px;
+				border: 1px solid #e5e7eb;
+				border-radius: 9999px;
+				box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+				object-fit: cover;
+				object-position: center;
+			}
+			.about-title h1 {
+				margin-bottom: 0.35rem;
+			}
+			.about-title p {
+				margin: 0;
+				color: rgb(var(--gray));
+			}
+			@media (max-width: 640px) {
+				.about-header {
+					flex-direction: column;
+					align-items: flex-start;
+					gap: 1rem;
+				}
+				.about-avatar {
+					width: 88px;
+					height: 88px;
+				}
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
 			<article class="prose">
-				<h1>关于我</h1>
+				<div class="about-header">
+					{avatarSrc && <img class="about-avatar" src={avatarSrc} alt="大愚头像" loading="eager" />}
+					<div class="about-title">
+						<h1>关于我</h1>
+						<p>{SITE_DESCRIPTION}</p>
+					</div>
+				</div>
 				<p>我是俞昕炜，也可以叫我“大愚”。</p>
 
 				<p>

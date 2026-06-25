@@ -1,11 +1,23 @@
 ---
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
+import { existsSync } from 'node:fs';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_SLOGAN, SITE_TITLE } from '../consts';
+
+const avatarCandidates = [
+	'/assets/images/avatar/dayu-avatar.webp',
+	'/assets/images/avatar/dayu-avatar.png',
+	'/assets/images/avatar/dayu-avatar.jpg',
+	'/assets/images/avatar/dayu-avatar.jpeg',
+];
+
+const avatarSrc = avatarCandidates.find((src) =>
+	existsSync(new URL(`../../public${src}`, import.meta.url)),
+);
 
 const topics = [
 	{
@@ -44,8 +56,21 @@ const posts = (await getCollection('blog')).sort(
 				width: 960px;
 			}
 			.hero {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
 				padding: 3.5em 0 3em;
 				border-bottom: 1px solid rgb(var(--gray-light));
+			}
+			.avatar {
+				width: 112px;
+				height: 112px;
+				margin-bottom: 1.5rem;
+				border: 1px solid #e5e7eb;
+				border-radius: 9999px;
+				box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+				object-fit: cover;
+				object-position: center;
 			}
 			.hero h1 {
 				margin-bottom: 0.35em;
@@ -143,6 +168,11 @@ const posts = (await getCollection('blog')).sort(
 				.hero {
 					padding: 2em 0;
 				}
+				.avatar {
+					width: 88px;
+					height: 88px;
+					margin-bottom: 1.25rem;
+				}
 				.hero h1 {
 					font-size: 2.25em;
 				}
@@ -170,6 +200,7 @@ const posts = (await getCollection('blog')).sort(
 		<Header />
 		<main>
 			<section class="hero">
+				{avatarSrc && <img class="avatar" src={avatarSrc} alt="大愚头像" loading="eager" />}
 				<h1>{SITE_TITLE}</h1>
 				<p class="slogan">{SITE_SLOGAN}</p>
 				<p class="description">{SITE_DESCRIPTION}</p>
