@@ -12,6 +12,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# local large font source
+public/assets/fonts/lxgw-wenkai-screen.woff2
+
 
 # environment variables
 .env

@@ -201,8 +201,8 @@ const posts = (await getCollection('blog')).sort(
 		<main>
 			<section class="hero">
 				{avatarSrc && <img class="avatar" src={avatarSrc} alt="大愚头像" loading="eager" />}
-				<h1>{SITE_TITLE}</h1>
-				<p class="slogan">{SITE_SLOGAN}</p>
+				<h1 class="hero-title">{SITE_TITLE}</h1>
+				<p class="slogan hero-slogan">{SITE_SLOGAN}</p>
 				<p class="description">{SITE_DESCRIPTION}</p>
 			</section>
 
